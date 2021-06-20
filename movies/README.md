@@ -1,4 +1,4 @@
-# movies
+# Movies
 
 A movie and TV show app.
 
