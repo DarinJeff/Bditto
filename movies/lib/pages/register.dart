@@ -51,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
         title: const Text(
           'Show Time',
           style: TextStyle(
-              fontFamily: 'DelaGothic', letterSpacing: 1, fontSize: 22),
+              fontFamily: 'DelaGothicOne', letterSpacing: 1, fontSize: 22),
         ),
       ),
       body: FutureBuilder(
