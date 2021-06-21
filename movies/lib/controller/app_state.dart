@@ -1,11 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AppState{
-  BehaviorSubject _loggedIn = BehaviorSubject<bool>.seeded(false);
-  Stream get loggedInStream => _loggedIn.stream;
-  bool get isLoggedIn => _loggedIn.value;
-  setLoggedIn(){_loggedIn.add(true);}
-  clearLoggedIn(){_loggedIn.add(false);}
+  BehaviorSubject _user = BehaviorSubject<User?>.seeded(null);
+  bool get user => _user.value;
+  setUser(User user){_user.add(user);}
+  nullUser(){_user.add(null);}
+
+  BehaviorSubject _fireAuthStatus = BehaviorSubject<FireAuthStatus>.seeded(FireAuthStatus.sucess);
+  Stream get fireAuthStream => _fireAuthStatus.stream;
+  HomeStatus get fireAuthStatus => _fireAuthStatus.value;
+  setFireAuthStatus(FireAuthStatus status){_fireAuthStatus.add(status);}
 
   BehaviorSubject _homeStatus = BehaviorSubject<HomeStatus>.seeded(HomeStatus.loading);
   Stream get homeStateStream => _homeStatus.stream;
@@ -14,3 +19,4 @@ class AppState{
 }
 
 enum HomeStatus {loading, completed, error, retry}
+enum FireAuthStatus {weakPassword, sucess, loading, accountExists, wrongPassword, noAccount}

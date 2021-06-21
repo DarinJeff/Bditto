@@ -6,6 +6,7 @@ import 'package:movies/controller/app_state.dart';
 import 'package:movies/model/tv_show_response.dart';
 import 'package:movies/pages/error.dart';
 import 'package:movies/model/movie_response.dart';
+import 'package:movies/pages/login.dart';
 import 'package:movies/pages/search_results.dart';
 import 'package:movies/services/api_helper.dart';
 import 'package:movies/widgets/movie_grid.dart';
@@ -20,7 +21,7 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home>{
+class _HomeState extends State<Home> {
   final AppState appState = getIt.get<AppState>();
   late Future<MoviesResponse> movies;
   late Future<TvShowsResponse> shows;
@@ -44,36 +45,47 @@ class _HomeState extends State<Home>{
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          leading: IconButton(
+            onPressed: _signOut,
+            icon: const Icon(
+              FontAwesomeIcons.signOutAlt,
+              color: Colors.orange,
+              size: 20,
+            ),
+          ),
           title: const Text(
             "Show  Time",
             style: TextStyle(
-              fontSize: 23,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'DelaGothicOne',
-              letterSpacing: 1
-            ),
+                fontSize: 23,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'DelaGothicOne',
+                letterSpacing: 1),
           ),
-          actions: [IconButton(
-            icon: Icon(Icons.search, color: color),
-            onPressed: () async {
-                if((DefaultTabController.of(context)?.index ?? 0) == 0){
-                  await showSearch(
-                      context: context,
-                      delegate: MovieSearch());
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search, color: color),
+              onPressed: () async {
+                if ((DefaultTabController.of(context)?.index ?? 0) == 0) {
+                  await showSearch(context: context, delegate: MovieSearch());
                 } else {
-                  await showSearch(
-                      context: context,
-                      delegate: TvShowSearch());
+                  await showSearch(context: context, delegate: TvShowSearch());
                 }
-
-            },
-          )],
+              },
+            )
+          ],
           bottom: TabBar(
             tabs: [
               Tab(
-                icon: Icon(FontAwesomeIcons.film, color: color,),
+                icon: Icon(
+                  FontAwesomeIcons.film,
+                  color: color,
+                ),
               ),
-              Tab(icon: Icon(FontAwesomeIcons.tv, color: color,))
+              Tab(
+                  icon: Icon(
+                FontAwesomeIcons.tv,
+                color: color,
+              ))
             ],
           ),
         ),
@@ -139,5 +151,13 @@ class _HomeState extends State<Home>{
             )
           ],
         ));
+  }
+
+  void _signOut() {
+    appState.setFireAuthStatus(FireAuthStatus.noAccount);
+    appState.nullUser();
+    appState.setHomeStatus(HomeStatus.loading);
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 }

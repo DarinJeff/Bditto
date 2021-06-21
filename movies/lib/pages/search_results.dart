@@ -42,7 +42,6 @@ class MovieSearch extends SearchDelegate<void> {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.connectionState == ConnectionState.done) {
-          print(snapshot.data);
           return ((snapshot.data?.results?.length ?? 0) > 0)
               ? MovieGrid(movies: snapshot.data)
               : Center(
@@ -134,31 +133,30 @@ class TvShowSearch extends SearchDelegate<void> {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.connectionState == ConnectionState.done) {
-          print(snapshot.data);
           return ((snapshot.data?.results?.length ?? 0) > 0)
               ? TvShowGrid(shows: snapshot.data)
               : Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Icon(
-                      FontAwesomeIcons.sadTear,
-                      size: 50,
+                  child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const <Widget>[
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: Icon(
+                        FontAwesomeIcons.sadTear,
+                        size: 50,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 20.0),
-                    child: Text(
-                      'No matching results found',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  )
-                ],
-              ));
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                      child: Text(
+                        'No matching results found',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    )
+                  ],
+                ));
         } else {
           return Error(
               errorMessage: "Something went wrong",
@@ -174,19 +172,19 @@ class TvShowSearch extends SearchDelegate<void> {
   Widget buildSuggestions(BuildContext context) {
     return Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            SizedBox(
-              width: 50,
-              height: 50,
-              child: Icon(
-                Icons.search,
-                size: 50,
-              ),
-            ),
-            Text('Enter a TV Show to search.')
-          ],
-        ));
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const <Widget>[
+        SizedBox(
+          width: 50,
+          height: 50,
+          child: Icon(
+            Icons.search,
+            size: 50,
+          ),
+        ),
+        Text('Enter a TV Show to search.')
+      ],
+    ));
   }
 }

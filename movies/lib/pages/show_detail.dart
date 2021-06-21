@@ -6,6 +6,14 @@ import 'package:movies/model/tv_show_response.dart';
 
 class ShowDetails extends StatelessWidget {
   final Show? show;
+  final SnackBar sadSnack = const SnackBar(
+    backgroundColor: Colors.black38,
+    content: Text(
+      "Rating a TV show has not been implemented 😢",
+      style: TextStyle(color: Colors.white),
+    ),
+    duration: Duration(milliseconds: 1500),
+  );
 
   const ShowDetails({Key? key, required this.show}) : super(key: key);
 
@@ -14,14 +22,20 @@ class ShowDetails extends StatelessWidget {
     double posterWidth = 210;
     double posterHeight = 260;
     Color color = Colors.white;
-    String date = DateFormat("yyyy-MM-dd").format(show?.firstAirDate ?? DateTime.now());
+    String date =
+        DateFormat("yyyy-MM-dd").format(show?.firstAirDate ?? DateTime.now());
     return Scaffold(
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 5.0, right: 5),
         child: FloatingActionButton(
           backgroundColor: Colors.black.withOpacity(0.6),
-          onPressed: (){},
-          child: const Icon(Icons.star, color: Colors.amber,),
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(sadSnack);
+          },
+          child: const Icon(
+            Icons.star,
+            color: Colors.amber,
+          ),
         ),
       ),
       body: Stack(
@@ -38,7 +52,7 @@ class ShowDetails extends StatelessWidget {
                           "${Constants.baseImgUrl}${show?.backdropPath ?? show?.posterPath ?? "/qi6Edc1OPcyENecGtz8TF0DUr9e.jpg"}"),
                       fit: BoxFit.cover,
                       placeholder:
-                      const AssetImage('assets/images/loading.gif'),
+                          const AssetImage('assets/images/loading.gif'),
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -46,15 +60,15 @@ class ShowDetails extends StatelessWidget {
                               begin: FractionalOffset.bottomCenter,
                               end: FractionalOffset.topCenter,
                               colors: [
-                                color.withOpacity(0.5),
-                                color.withOpacity(0.4),
-                                Colors.transparent,
-                              ],
+                            color.withOpacity(0.5),
+                            color.withOpacity(0.4),
+                            Colors.transparent,
+                          ],
                               stops: const [
-                                0.0,
-                                0.125,
-                                0.4
-                              ])),
+                            0.0,
+                            0.125,
+                            0.4
+                          ])),
                     )
                   ],
                 ),
@@ -71,7 +85,7 @@ class ShowDetails extends StatelessWidget {
                     children: <Widget>[
                       SizedBox(
                         width: double.infinity,
-                        height: MediaQuery.of(context).size.height/1.4,
+                        height: MediaQuery.of(context).size.height / 1.4,
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(13, 100, 13, 8),
                           child: Card(
@@ -83,23 +97,26 @@ class ShowDetails extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 20, top: 120),
+                                  padding: const EdgeInsets.only(
+                                      right: 20, top: 120),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: <Widget>[
-                                      Text(show?.voteAverage
-                                          .toString() ??
-                                          "N/A",
-                                        style: const TextStyle(fontSize: 19),),
-                                      const SizedBox(width: 10,),
+                                      Text(
+                                        show?.voteAverage.toString() ?? "N/A",
+                                        style: const TextStyle(fontSize: 19),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
                                       const Icon(Icons.star,
-                                          size: 28,
-                                          color: Colors.amber)
+                                          size: 28, color: Colors.amber)
                                     ],
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 8.0, left: 8, right: 8, bottom: 8),
+                                  padding: const EdgeInsets.only(
+                                      top: 8.0, left: 8, right: 8, bottom: 8),
                                   child: Center(
                                     child: Text(
                                       show?.name ?? "",
@@ -113,36 +130,42 @@ class ShowDetails extends StatelessWidget {
                                   ),
                                 ),
                                 const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 13.0),
-                                  child: Divider(thickness: 0.5, color: Colors.amber),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 13.0),
+                                  child: Divider(
+                                      thickness: 0.5, color: Colors.amber),
                                 ),
                                 Expanded(
                                   child: SingleChildScrollView(
                                     physics: const BouncingScrollPhysics(),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: <Widget>[
                                         const Padding(
                                             padding:
-                                            EdgeInsets.only(left: 13.0),
+                                                EdgeInsets.only(left: 13.0),
                                             child: Text(
                                               'Overview',
-                                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
                                             )),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8, horizontal: 18),
                                           child: Text(show?.overview ?? "N/A"),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               left: 13.0, bottom: 4.0),
-                                          child: Text(
-                                              'Release : $date'),
+                                          child: Text('Release : $date'),
                                         ),
                                         Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 13.0, bottom: 4.0),
-                                            child: Text("Original Language: ${show?.originalLanguage ?? "--"}"))
+                                            child: Text(
+                                                "Original Language: ${show?.originalLanguage ?? "--"}"))
                                       ],
                                     ),
                                   ),
@@ -159,7 +182,7 @@ class ShowDetails extends StatelessWidget {
             ],
           ),
           Positioned(
-            left: MediaQuery.of(context).size.width/2 - posterWidth/2 - 30,
+            left: MediaQuery.of(context).size.width / 2 - posterWidth / 2 - 30,
             top: 75,
             child: Hero(
               tag: '${show?.id ?? 1}',
@@ -172,8 +195,7 @@ class ShowDetails extends StatelessWidget {
                     image: NetworkImage(
                         "${Constants.baseImgUrl}${show?.posterPath}"),
                     fit: BoxFit.cover,
-                    placeholder: const AssetImage(
-                        'assets/images/loading.gif'),
+                    placeholder: const AssetImage('assets/images/loading.gif'),
                   ),
                 ),
               ),
